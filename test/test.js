@@ -27,3 +27,4 @@ export const loginData = {
 require('./authentications.js')
 require('./articles.js')
 require('./profiles.js')
+require('./users.js')
