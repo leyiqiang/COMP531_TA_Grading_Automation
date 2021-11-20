@@ -1,0 +1,23 @@
+{
+  "name": "automationhw6",
+  "version": "1.0.0",
+  "description": "TA Grading Automation For COMP531 HW6, yay!",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "Leyi Qiang",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/register": "^7.16.0",
+    "chai": "^4.3.4",
+    "jasmine": "^3.10.0",
+    "mocha": "^9.1.3",
+    "supertest": "^6.1.6"
+  }
+}
