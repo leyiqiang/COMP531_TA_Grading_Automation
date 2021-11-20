@@ -46,9 +46,9 @@ describe('Articles', () => {
       .get('articles')
       .set('Cookie', cookie)
       .then((res) => {
+        console.log("### Get /articles of testUser1 response: " + JSON.stringify(res.body))
         expect(res.status).to.eq(200)
         expect(res.body.articles).to.be.empty
-        console.log("### Get /articles of testUser1 response: " + JSON.stringify(res.body))
       })
   })
 
@@ -61,12 +61,9 @@ describe('Articles', () => {
       .set('Cookie', cookie)
       .send(articleData)
       .then((res) => {
+        console.log("### POST /article response: " + JSON.stringify(res.body))
         expect(res.status).to.eq(200)
         expect(res.body.articles).to.have.lengthOf(1)
-        console.log("### POST /article response: " + JSON.stringify(res.body))
       })
   })
-
-
-
 })

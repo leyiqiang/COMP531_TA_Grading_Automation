@@ -32,7 +32,7 @@ describe('Authentications', () => {
       .then((res) => {
         expect(res.status).to.eq(200)
         expect(res.body.username).to.eq(testUser1, '!!! /POST register does not return correct username: user in response data')
-        expect(res.body.result).to.eq('success', '!!! /POST register does not return correct result: \'success\' in response data')
+        expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST register does not return correct result: \'success\' in response data')
       })
   });
 
@@ -43,7 +43,7 @@ describe('Authentications', () => {
       .then((res) => {
         expect(res.status).to.eq(200)
         expect(res.body.username).to.eq(testUser1, '!!! /POST login does not return correct username: user in response data')
-        expect(res.body.result).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data')
+        expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data')
       })
   });
 
@@ -54,7 +54,7 @@ describe('Authentications', () => {
       .then((res) => {
         expect(res.status).to.eq(200)
         expect(res.body.username).to.eq(testUser1, '!!! /POST login does not return correct username: user in response data')
-        expect(res.body.result).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data')
+        expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data')
       })
   });
 
