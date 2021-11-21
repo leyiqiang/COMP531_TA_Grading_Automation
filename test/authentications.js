@@ -1,7 +1,7 @@
 import supertest from 'supertest'
 import { expect } from 'chai';
 
-import {request} from './test';
+import { request } from './test';
 
 const testUser1 = 'userTestOne' + new Date().getTime() // in case of repeat username
 const testUser2 = 'userTestTwo' + new Date().getTime()
@@ -24,8 +24,9 @@ export const loginData = {
 }
 
 let cookie = []
-describe('Authentications', () => {
+describe('0Registration', () => {
   it('POST /register updates the list of registered users(register user)[3 pts] ', function () {
+    this.timeout(15000) // heroku starts slow
     return request
       .post('register')
       .send(registerData)
@@ -48,6 +49,10 @@ describe('Authentications', () => {
         expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data (' + resBody + ')')
       })
   });
+})
+
+
+describe('1Login', () => {
 
   it('POST /login returns a username and message (login response) [3 pts] ', function () {
     return request
@@ -61,7 +66,7 @@ describe('Authentications', () => {
       })
   });
 
-  it('POST /login returns a username and message (login response) [3 pts] ', function () {
+  it('POST /login returns a username and message (cookie http-only) [3 pts] ', function () {
     return request
       .post('login')
       .send(loginData)
@@ -71,6 +76,10 @@ describe('Authentications', () => {
         expect(cookie[0]).to.have.string('HttpOnly', '!!! The cookie is not http only! (' + res.headers['set-cookie'] + ')')
       })
   });
+})
+
+
+describe('2After Login Actions', () => {
 
   it('POST /login returns a username and message(is authenticated after login)[3 pts] ', function () {
     return request
@@ -80,8 +89,9 @@ describe('Authentications', () => {
         expect(res.status).to.eq(200)
       })
   });
-
-  it('PUT /logout logs out user and removes session id(put logout success) [3 pts]', function() {
+})
+describe('3Logout', () => {
+  it('PUT /logout logs out user and removes session id(put logout success) [3 pts]', function () {
     return request
       .put('logout')
       .set('Cookie', cookie)
@@ -90,12 +100,11 @@ describe('Authentications', () => {
       })
   })
 
-  it('PUT /logout logs out user and removes session id(no auth after logout) [3 pts]', function() {
+  it('PUT /logout logs out user and removes session id(no auth after logout) [3 pts]', function () {
     return request
       .get('headline')
       .then((res) => {
         expect(res.status).to.eq(401)
       })
   })
-
 })

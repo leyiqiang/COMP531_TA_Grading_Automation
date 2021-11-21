@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 
-export const APP_URL = 'https://backend-tm54-hw.herokuapp.com/';
+export const APP_URL = "<url_here>/";
 export const request = supertest(APP_URL)
 
 export const testUser1 = 'userTestOne' + new Date().getTime() // in case of repeat username
@@ -25,6 +25,6 @@ export const loginData = {
 
 
 require('./authentications.js')
-require('./articles.js')
 require('./profiles.js')
 require('./users.js')
+require('./articles.js')
