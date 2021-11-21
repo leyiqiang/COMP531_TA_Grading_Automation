@@ -48,9 +48,11 @@ describe('Articles', () => {
       .then((res) => {
         const resBody = JSON.stringify(res.body);
         console.log('### Get /articles of testUser1 response: ' + resBody)
+
+        let articles = res.body[ARTICLES] || res.body
         expect(res.status).to.eq(200)
-        expect(res.body[ARTICLES], '!!! res.body.articles is undefined: ' + resBody).to.not.be.undefined
-        expect(res.body[ARTICLES], '!!! get article of a new user is invalid: ' + resBody).to.be.ok
+        expect(articles, '!!! res.body.articles is undefined: ' + resBody).to.not.be.undefined
+        expect(articles, '!!! get article of a new user is invalid: ' + resBody).to.be.ok
       })
   })
   it('POST /article returns an array of articles with newly added article [3 pts] ', async function () {
@@ -79,10 +81,13 @@ describe('Articles', () => {
       .set('Cookie', cookie)
     const resBody = JSON.stringify(res.body);
     console.log('### POST /article response: ' + resBody)
+
+    let articles = res.body[ARTICLES] || res.body
+    let post0Article = post0.body[ARTICLES] || post0.body
     expect(res.status).to.eq(200)
-    expect(res.body[ARTICLES], '!!! res.body.articles is undefined: ' + resBody).to.not.be.undefined
-    expect(res.body[ARTICLES]).to.have.length.greaterThanOrEqual(2)
-    expect(post0.body[ARTICLES]).to.have.lengthOf(1)
+    expect(articles, '!!! res.body.articles is undefined: ' + resBody).to.not.be.undefined
+    expect(articles).to.have.length.greaterThanOrEqual(2)
+    expect(post0Article).to.have.lengthOf(1)
 
     return
   })
@@ -98,22 +103,27 @@ describe('Articles', () => {
     let afterPostRequest = await request
       .get('articles')
       .set('Cookie', cookie)
-    articleResult = afterPostRequest.body[ARTICLES]
+    articleResult = afterPostRequest.body[ARTICLES] || afterPostRequest.body
+
     let afterPostRequestBody = JSON.stringify(afterPostRequest.body)
     console.log('### GET /articles(after added two articles) response: ' + afterPostRequestBody)
-    expect(afterPostRequest.status).to.eq(200)
-    expect(afterPostRequest.body[ARTICLES], '!!! res.body.articles is undefined: ' + afterPostRequestBody).to.not.be.undefined
-    expect(afterPostRequest.body[ARTICLES]).to.have.length.greaterThanOrEqual(2)
 
+    expect(afterPostRequest.status).to.eq(200)
+    expect(articleResult, '!!! res.body.articles is undefined: ' + afterPostRequestBody).to.not.be.undefined
+    expect(articleResult).to.have.length.greaterThanOrEqual(2)
 
     let pid = articleResult[0]['pid'] || articleResult[0]['_id']
+    console.log(pid)
     let res = await request
       .put('articles/' + pid)
       .set('Cookie', cookie)
       .send(articleData)
+
     console.log('### PUT /article/pid response: ' + JSON.stringify(res.body))
+
+    let articles = res.body[ARTICLES] || res.body
     expect(res.status).to.eq(200)
-    expect(res.body[ARTICLES]).to.have.lengthOf(2)
+    expect(articles).to.have.lengthOf(2)
     return
   })
 
@@ -129,9 +139,12 @@ describe('Articles', () => {
       .put('articles/' + pid)
       .set('Cookie', cookie)
       .send(commentData)
+
     console.log('### PUT /article/:id with new comment response: ' + JSON.stringify(res.body))
+
     expect(res.status).to.eq(200)
-    commentList = res.body[ARTICLES][0]['comments'] || res.body[ARTICLES][0]['comment']
+    let articles = res.body[ARTICLES] || res.body
+    commentList = articles[0]['comments'] || articles[0]['comment']
     expect(commentList).to.have.length.greaterThan(0)
     return
   })

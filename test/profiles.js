@@ -124,8 +124,9 @@ describe('Headlines and Profiles', () => {
         const resBody = JSON.stringify(res.body);
         console.log('### GET /email res data: ' + resBody)
         expect(res.status).to.eq(200)
+        let email = res.body['email'] || res.body['emailAddress']
         expect(res.body['username'], '!!! GET /email returns invalid username: ' + resBody).to.be.ok
-        expect(res.body['email'], '!!! GET /email returns invalid email: ' + resBody).to.be.ok
+        expect(email, '!!! GET /email returns invalid email: ' + resBody).to.be.ok
 
         return request
           .get('email/' + testUser1)
@@ -134,8 +135,9 @@ describe('Headlines and Profiles', () => {
             const resBody = JSON.stringify(res.body);
             console.log('### GET /email/testUser1 res data: ' + resBody)
             expect(res.status).to.eq(200)
+            let email = res.body['email'] || res.body['emailAddress']
             expect(res.body['username'], '!!! GET email/testUser1 returns invalid username: ' + resBody).to.be.ok
-            expect(res.body['email'], '!!! GET email/testUser1 returns invalid email: ' + resBody).to.be.ok
+            expect(email, '!!! GET email/testUser1 returns invalid email: ' + resBody).to.be.ok
           })
       })
   })
@@ -151,8 +153,9 @@ describe('Headlines and Profiles', () => {
         const resBody = JSON.stringify(res.body);
         console.log('### PUT /email res data: ' + resBody)
         expect(res.status).to.eq(200)
+        let email = res.body['email'] || res.body['emailAddress']
         expect(res.body['username'], '!!! PUT /email returns invalid username: ' + resBody).to.be.ok
-        expect(res.body['email'], '!!! PUT /email returns invalid email: ' + resBody).to.be.ok
+        expect(email, '!!! PUT /email returns invalid email: ' + resBody).to.be.ok
       })
   })
 
