@@ -50,8 +50,8 @@ describe('Users/Followers', () => {
         const resBody = JSON.stringify(res.body);
         console.log('### GET /following res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username, "!!! GET /following returns invalid username: " + resBody).to.be.ok
-        expect(res.body.following, "!!! GET /following returns invalid followers list: " + resBody).to.be.ok;
+        expect(res.body['username'], "!!! GET /following returns invalid username: " + resBody).to.be.ok
+        expect(res.body['following'], "!!! GET /following returns invalid followers list: " + resBody).to.be.ok;
 
         return request
           .get('following/' + testUser1)
@@ -60,8 +60,8 @@ describe('Users/Followers', () => {
             const resBody = JSON.stringify(res.body);
             console.log('### GET /following/testUser1 res data: ' + resBody)
             expect(res.status).to.eq(200)
-            expect(res.body.username, "!!! GET /following/testUser1 returns invalid username: " + resBody).to.be.ok
-            expect(res.body.following, "!!! GET /following/testUser1 returns invalid followers list: " + resBody).to.be.ok
+            expect(res.body['username'], "!!! GET /following/testUser1 returns invalid username: " + resBody).to.be.ok
+            expect(res.body['following'], "!!! GET /following/testUser1 returns invalid followers list: " + resBody).to.be.ok
           })
       })
   })
@@ -74,10 +74,15 @@ describe('Users/Followers', () => {
       .then((res) => {
         const resBody = JSON.stringify(res.body);
         console.log('### PUT /following/:user res data: ' + resBody)
+        expect(res.status).that.is.oneOf([200, 400])
+        if (res.status === 200) {
+          expect(res.body['username'], "!!! PUT /following/:user returns invalid username: " + resBody).to.be.ok
+          expect(res.body['following'], "!!! PUT /following/:user returns invalid followers list: " + resBody).to.not.have.lengthOf(0)
+        } else {
+            // todo
+        }
         expect(res.status).to.eq(200)
-        expect(res.body.username, "!!! PUT /following/:user returns invalid username: " + resBody).to.be.ok
-        expect(res.body.following, "!!! PUT /following/:user returns invalid followers list: " + resBody).to.not.have.lengthOf(0)
-      })
+ })
   })
 
 
@@ -90,8 +95,8 @@ describe('Users/Followers', () => {
         const resBody = JSON.stringify(res.body);
         console.log('### DELETE /following/:user res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username, "!!! DELETE /following/:user returns invalid username: " + resBody).to.be.ok
-        expect(res.body.following, "!!! DELETE /following/:user returns invalid follower list: " + resBody).to.be.ok
+        expect(res.body['username'], "!!! DELETE /following/:user returns invalid username: " + resBody).to.be.ok
+        expect(res.body['following'], "!!! DELETE /following/:user returns invalid follower list: " + resBody).to.be.ok
       })
   })
 

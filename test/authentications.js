@@ -24,7 +24,7 @@ export const loginData = {
 }
 
 let cookie = []
-describe('0Registration', () => {
+describe('Authentication', () => {
   it('POST /register updates the list of registered users(register user)[3 pts] ', function () {
     this.timeout(15000) // heroku starts slow
     return request
@@ -49,10 +49,7 @@ describe('0Registration', () => {
         expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data (' + resBody + ')')
       })
   });
-})
 
-
-describe('1Login', () => {
 
   it('POST /login returns a username and message (login response) [3 pts] ', function () {
     return request
@@ -76,21 +73,18 @@ describe('1Login', () => {
         expect(cookie[0]).to.have.string('HttpOnly', '!!! The cookie is not http only! (' + res.headers['set-cookie'] + ')')
       })
   });
-})
-
-
-describe('2After Login Actions', () => {
 
   it('POST /login returns a username and message(is authenticated after login)[3 pts] ', function () {
     return request
-      .get('headline')
+      .put('headline')
       .set('Cookie', cookie)
+      .send({ headline: 'I am new' })
       .then((res) => {
-        expect(res.status).to.eq(200)
+        expect(res.status, res.err).to.eq(200)
       })
-  });
-})
-describe('3Logout', () => {
+
+  })
+
   it('PUT /logout logs out user and removes session id(put logout success) [3 pts]', function () {
     return request
       .put('logout')

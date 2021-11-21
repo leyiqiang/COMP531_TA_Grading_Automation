@@ -1,6 +1,7 @@
 import supertest from 'supertest';
+import { expect } from 'chai';
 
-export const APP_URL = "<url_here>/";
+export const APP_URL = "<...>/";
 export const request = supertest(APP_URL)
 
 export const testUser1 = 'userTestOne' + new Date().getTime() // in case of repeat username
@@ -22,8 +23,12 @@ export const loginData = {
   'username': testUser1,
   'password': password,
 }
+describe('General', () => {
 
-
+  it('Should hosted on heroku', () => {
+    expect(APP_URL).to.contains("herokuapp.com");
+  });
+})
 require('./authentications.js')
 require('./profiles.js')
 require('./users.js')
