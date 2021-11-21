@@ -30,9 +30,10 @@ describe('Authentications', () => {
       .post('register')
       .send(registerData)
       .then((res) => {
+        const resBody = JSON.stringify(res.body);
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1, '!!! /POST register does not return correct username: user in response data')
-        expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST register does not return correct result: \'success\' in response data')
+        expect(res.body.username).to.eq(testUser1, '!!! /POST register does not return correct username: user in response data (' + resBody + ')')
+        expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST register does not return correct result: \'success\' in response data (' + resBody + ')')
       })
   });
 
@@ -41,9 +42,10 @@ describe('Authentications', () => {
       .post('login')
       .send(loginData)
       .then((res) => {
+        const resBody = JSON.stringify(res.body);
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1, '!!! /POST login does not return correct username: user in response data')
-        expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data')
+        expect(res.body.username).to.eq(testUser1, '!!! /POST login does not return correct username: user in response data(' + resBody + ')')
+        expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data (' + resBody + ')')
       })
   });
 
@@ -52,9 +54,10 @@ describe('Authentications', () => {
       .post('login')
       .send(loginData)
       .then((res) => {
+        const resBody = JSON.stringify(res.body);
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1, '!!! /POST login does not return correct username: user in response data')
-        expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data')
+        expect(res.body.username).to.eq(testUser1, '!!! /POST login does not return correct username: user in response data (' + resBody + ')')
+        expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data (' + resBody + ')')
       })
   });
 
@@ -64,8 +67,8 @@ describe('Authentications', () => {
       .send(loginData)
       .then((res) => {
         cookie = res.headers['set-cookie']
-        expect(cookie[0]).to.have.string('HttpOnly', '!!! The cookie is not http only![3 pts]')
         console.log('### Cookie Result after login: ' + res.headers['set-cookie'])
+        expect(cookie[0]).to.have.string('HttpOnly', '!!! The cookie is not http only! (' + res.headers['set-cookie'] + ')')
       })
   });
 

@@ -46,9 +46,10 @@ describe('Headlines and Profiles', () => {
       .get('headline')
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### GET /headline res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### GET /headline res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.headline, '!!! GET /headline does not have headline field in response').to.not.be.empty;
+        expect(res.body.headline, '!!! GET /headline does not have headline field in response (' + resBody + ')').to.be.ok;
       })
   })
 
@@ -57,9 +58,10 @@ describe('Headlines and Profiles', () => {
       .get('headline/' + testUser1)
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### GET /headline/testUser1 res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### GET /headline/testUser1 res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.headline, '!!! GET /headline/testUser1 does not have headline field in response').to.not.be.empty;
+        expect(res.body.headline, '!!! GET /headline/testUser1 does not have headline field in response(' + resBody + ')').to.be.ok;
       })
   })
 
@@ -68,9 +70,10 @@ describe('Headlines and Profiles', () => {
       .get('headline/Bret')
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### GET /headline/Bret res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### GET /headline/Bret res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.headline, '!!! GET /headline/Bret does not have headline field in response').to.not.be.empty;
+        expect(res.body.headline, '!!! GET /headline/Bret does not have headline field in response: ' + resBody).to.not.be.empty;
       })
   })
 
@@ -79,9 +82,10 @@ describe('Headlines and Profiles', () => {
       .get('headline/asjdklsdjflkdjlfkjwelkfjlk')
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### GET /headline/notfound res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### GET /headline/notfound res data: ' + resBody)
         expect(res.status).to.not.eq(200)
-        expect(res.body.headline, '!!! GET /headline/notfound should not have headline field in response').to.be.undefined;
+        expect(res.body.headline, '!!! GET /headline/notfound should not have headline field in response: ' + resBody).to.be.undefined;
       })
   })
 
@@ -92,14 +96,16 @@ describe('Headlines and Profiles', () => {
       .set('Cookie', cookie)
       .send({ headline: updatedHeadline })
       .then((res) => {
-        console.log('### PUT /headline res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### PUT /headline res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.headline, '!!! PUT /headline does not update headline!').to.eq(updatedHeadline);
+        expect(res.body.headline, '!!! PUT /headline does not update headline!: ' + resBody).to.eq(updatedHeadline);
         return request.get('headline/' + testUser1)
           .set('Cookie', cookie)
           .then((res) => {
+            const resBody = JSON.stringify(res.body);
             expect(res.status).to.eq(200)
-            expect(res.body.headline, '!!! PUT /headline does not update headline!').to.eq(updatedHeadline);
+            expect(res.body.headline, '!!! PUT /headline does not update headline!: ' +  resBody).to.eq(updatedHeadline);
           })
       })
   })
@@ -111,10 +117,11 @@ describe('Headlines and Profiles', () => {
       .set('Cookie', cookie)
       .send({ password: 'myNewPassword123!@' })
       .then((res) => {
-        console.log('### PUT /password res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### PUT /password res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1)
-        expect(res.body.result.toLowerCase()).to.eq('success')
+        expect(res.body.username, '!!! PUT /password returns invalid username: ' + resBody).to.eq(testUser1)
+        expect(res.body.result.toLowerCase(), '!!! PUT /password does not return success message: ' + resBody).to.eq('success')
       })
   })
 
@@ -124,19 +131,21 @@ describe('Headlines and Profiles', () => {
       .get('email')
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### GET /email res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### GET /email res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1)
-        expect(res.body.email).to.eq(email)
+        expect(res.body.username, '!!! GET /email returns invalid username: ' + resBody).to.eq(testUser1)
+        expect(res.body.email, '!!! GET /email returns invalid email: ' + resBody).to.eq(email)
 
         return request
           .get('email/' + testUser1)
           .set('Cookie', cookie)
           .then((res) => {
-            console.log('### GET /email/testUser1 res data: ' + JSON.stringify(res.body))
+            const resBody = JSON.stringify(res.body);
+            console.log('### GET /email/testUser1 res data: ' + resBody)
             expect(res.status).to.eq(200)
-            expect(res.body.username).to.eq(testUser1)
-            expect(res.body.email).to.eq(email)
+            expect(res.body.username, '!!! GET email/testUser1 returns invalid username: ' + resBody).to.eq(testUser1)
+            expect(res.body.email, '!!! GET email/testUser1 returns invalid email: ' + resBody).to.eq(email)
           })
       })
   })
@@ -149,10 +158,11 @@ describe('Headlines and Profiles', () => {
       .set('Cookie', cookie)
       .send({ email: newEmail })
       .then((res) => {
-        console.log('### PUT /email res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### PUT /email res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1)
-        expect(res.body.email).to.eq(newEmail)
+        expect(res.body.username, '!!! PUT /email returns invalid username: ' + resBody).to.eq(testUser1)
+        expect(res.body.email, '!!! PUT /email returns invalid email: ' + resBody).to.eq(newEmail)
       })
   })
 
@@ -162,19 +172,21 @@ describe('Headlines and Profiles', () => {
       .get('zipcode')
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### GET /zipcode res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### GET /zipcode res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1)
-        expect(res.body.zipcode.toString()).to.eq(zipcode.toString())
+        expect(res.body.username, "!!! GET /zipcode returns invalid username: " + resBody).to.eq(testUser1)
+        expect(res.body.zipcode.toString(), "!!! GET /zipcode returns invalid zipcode: " + resBody).to.eq(zipcode.toString())
 
         return request
           .get('zipcode/' + testUser1)
           .set('Cookie', cookie)
           .then((res) => {
-            console.log('### GET /zipcode/testUser1 res data: ' + JSON.stringify(res.body))
+            const resBody = JSON.stringify(res.body);
+            console.log('### GET /zipcode/testUser1 res data: ' + resBody)
             expect(res.status).to.eq(200)
-            expect(res.body.username).to.eq(testUser1)
-            expect(res.body.zipcode.toString()).to.eq(zipcode.toString())
+            expect(res.body.username, "!!! GET /zipcode/testUser1 returns invalid username: " + resBody).to.eq(testUser1)
+            expect(res.body.zipcode.toString(), "!!! GET /zipcode/testUser1 returns invalid zipcode: " + resBody).to.eq(zipcode.toString())
           })
       })
   })
@@ -187,10 +199,11 @@ describe('Headlines and Profiles', () => {
       .set('Cookie', cookie)
       .send({ zipcode: newZip })
       .then((res) => {
-        console.log('### PUT /zipcode res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### PUT /zipcode res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1)
-        expect(res.body.zipcode.toString()).to.eq(newZip.toString())
+        expect(res.body.username, "!!! PUT /zipcode returns invalid username: " + resBody).to.eq(testUser1)
+        expect(res.body.zipcode.toString(), "!!! PUT /zipcode returns invalid zipcode: " + resBody).to.eq(newZip.toString())
       })
   })
 
@@ -200,22 +213,41 @@ describe('Headlines and Profiles', () => {
       .get('avatar')
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### GET /avatar res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### GET /avatar res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1)
-        expect(res.body.avatar).to.not.be.empty
+        expect(res.body.username, "!!! GET /avatar returns invalid username: " + resBody).to.eq(testUser1)
+        expect(res.body.avatar, "!!! GET /avatar returns invalid avatar: " + resBody).to.be.ok
 
         return request
           .get('avatar/' + testUser1)
           .set('Cookie', cookie)
           .then((res) => {
-            console.log('### GET /avatar/testUser1 res data: ' + JSON.stringify(res.body))
+            const resBody = JSON.stringify(res.body);
+            console.log('### GET /avatar/testUser1 res data: ' + resBody)
             expect(res.status).to.eq(200)
-            expect(res.body.username).to.eq(testUser1)
-            expect(res.body.avatar).to.not.be.empty
+            expect(res.body.username, "!!! GET /avatar/testUser1 returns invalid username: "+ resBody).to.eq(testUser1)
+            expect(res.body.avatar, "!!! GET /avatar/testUser1 returns invalid avatar: " + resBody).to.be.ok
           })
       })
   })
+
+
+  it('Stub: PUT /avatar [2 pts] ', function () {
+    const avatar = 'randomUrl';
+    return request
+      .put('avatar')
+      .set('Cookie', cookie)
+      .send({ avatar })
+      .then((res) => {
+        const resBody = JSON.stringify(res.body);
+        console.log('### PUT /avatar res data: ' + resBody)
+        expect(res.status).to.eq(200)
+        expect(res.body.username, "!!! PUT /avatar returns invalid username: " + resBody).to.eq(testUser1)
+        expect(res.body.zipcode.toString(), "!!! PUT /avatar returns invalid avatar: " + resBody).to.eq(avatar)
+      })
+  })
+
 
 
   it('Stub: GET /dob/:user? [2 pts] ', function () {
@@ -223,19 +255,19 @@ describe('Headlines and Profiles', () => {
       .get('dob')
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### GET /dob res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### GET /dob res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1)
-        expect(res.body.dob).to.not.be.empty
-
+        expect(res.body.username, "!!! GET /dob returns invalid username: " + resBody).to.eq(testUser1)
+        expect(res.body.dob, "!!! GET /dob returns invalid dob: " + resBody).to.be.ok
         return request
           .get('dob/' + testUser1)
           .set('Cookie', cookie)
           .then((res) => {
             console.log('### GET /dob/testUser1 res data: ' + JSON.stringify(res.body))
             expect(res.status).to.eq(200)
-            expect(res.body.username).to.eq(testUser1)
-            expect(res.body.dob).to.not.be.empty
+            expect(res.body.username, "!!! GET /dob/testUer1 returns invalid username: " + resBody).to.eq(testUser1)
+            expect(res.body.dob, "!!! GET /dob/testUser1 returns invalid dob: " + resBody).to.be.ok
           })
       })
   })

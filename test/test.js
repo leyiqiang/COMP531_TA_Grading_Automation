@@ -1,10 +1,10 @@
 import supertest from 'supertest';
 
-export const APP_URL = 'https://yz166-hw6-backend.herokuapp.com/';
+export const APP_URL = 'https://backend-tm54-hw.herokuapp.com/';
 export const request = supertest(APP_URL)
 
 export const testUser1 = 'userTestOne' + new Date().getTime() // in case of repeat username
-export const testUser2 = 'userTestTwo' + new Date().getTime()
+// export const testUser2 = 'userTestTwo' + new Date().getTime()
 export const password = 'AxoGyO9wjzESAFnL!' // in case someone have strong password verification
 export const dob = '11/1/1990'
 export const email = 'usertestone@gmail.com'

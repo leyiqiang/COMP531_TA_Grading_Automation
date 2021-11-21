@@ -4,7 +4,6 @@
   "description": "TA Grading Automation For COMP531 HW6, yay!",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./test/test.js"
   },
   "keywords": [],
   "author": "Leyi Qiang",

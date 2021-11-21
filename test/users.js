@@ -26,7 +26,7 @@ const loginData = {
 let cookie = []
 
 
-describe('Articles', () => {
+describe('Users/Followers', () => {
   before(() => {
     return request
       .post('register')
@@ -47,19 +47,21 @@ describe('Articles', () => {
       .get('following')
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### GET /following res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### GET /following res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1)
-        expect(res.body.following).to.have.lengthOf(0);
+        expect(res.body.username, "!!! GET /following returns invalid username: " + resBody).to.eq(testUser1)
+        expect(res.body.following, "!!! GET /following returns invalid followers list: " + resBody).to.have.lengthOf(0);
 
         return request
           .get('following/' + testUser1)
           .set('Cookie', cookie)
           .then((res) => {
-            console.log('### GET /following/testUser1 res data: ' + JSON.stringify(res.body))
+            const resBody = JSON.stringify(res.body);
+            console.log('### GET /following/testUser1 res data: ' + resBody)
             expect(res.status).to.eq(200)
-            expect(res.body.username).to.eq(testUser1)
-            expect(res.body.following).to.have.lengthOf(0)
+            expect(res.body.username, "!!! GET /following/testUser1 returns invalid username: " + resBody).to.eq(testUser1)
+            expect(res.body.following, "!!! GET /following/testUser1 returns invalid followers list: " + resBody).to.have.lengthOf(0)
           })
       })
   })
@@ -70,10 +72,11 @@ describe('Articles', () => {
       .put('following/'+newUser)
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### PUT /following/:user res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### PUT /following/:user res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1)
-        expect(res.body.following).to.have.lengthOf(1)
+        expect(res.body.username, "!!! PUT /following/:user returns invalid username: " + resBody).to.eq(testUser1)
+        expect(res.body.following, "!!! PUT /following/:user returns invalid followers list: " + resBody).to.have.lengthOf(1)
       })
   })
 
@@ -84,10 +87,11 @@ describe('Articles', () => {
       .delete('following/'+newUser)
       .set('Cookie', cookie)
       .then((res) => {
-        console.log('### DELETE /following/:user res data: ' + JSON.stringify(res.body))
+        const resBody = JSON.stringify(res.body);
+        console.log('### DELETE /following/:user res data: ' + resBody)
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1)
-        expect(res.body.following).to.have.lengthOf(0)
+        expect(res.body.username, "!!! DELETE /following/:user returns invalid username: " + resBody).to.eq(testUser1)
+        expect(res.body.following, "!!! DELETE /following/:user returns invalid follower list: " + resBody).to.have.lengthOf(0)
       })
   })
 
