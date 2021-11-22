@@ -135,7 +135,7 @@ describe('Articles', () => {
 
     // let pid = articleResult[0]['pid'] || articleResult[0]['_id']
     let res = await request
-      .put('articles/' + pid)
+      .put('articles/' + '1')
       .set('Cookie', cookie)
       .send(commentData)
 
@@ -158,7 +158,7 @@ describe('Articles', () => {
 
     // let pid = articleResult[0]['pid'] || articleResult[0]['_id']
     let res = await request
-      .put('articles/' + pid)
+      .put('articles/' + '1')
       .set('Cookie', cookie)
       .send(commentData)
     console.log('### PUT /articles/:id with new comment response: ' + JSON.stringify(res.body))
