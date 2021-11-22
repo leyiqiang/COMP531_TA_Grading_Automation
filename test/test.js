@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import { expect } from 'chai';
 
-export const APP_URL = "https://ricebackendserver.herokuapp.com/";
+export const APP_URL = "https://ricebook-backend-jay.herokuapp.com/";
 export const request = supertest(APP_URL)
 
 export const testUser1 = 'userTestOne' + new Date().getTime() // in case of repeat username
