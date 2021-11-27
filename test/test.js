@@ -1,14 +1,14 @@
 import supertest from 'supertest';
 import { expect } from 'chai';
 
-// export const APP_URL = "...";
-export const APP_URL = "localhost:3000/";
+export const APP_URL = "https://shielded-fjord-96252.herokuapp.com/";
+// export const APP_URL = "localhost:3000/";
 export const request = supertest(APP_URL)
 
 // In case the newly registered data not working,
 // and the student provides login info
-let studentLoginUsername = 'starkkk';
-let studentLoginPassword = '123';
+let studentLoginUsername;
+let studentLoginPassword;
 
 export const testUser1 = 'userTestOne' + new Date().getTime() // in case of repeat username
 // export const testUser2 = 'userTestTwo' + new Date().getTime()
