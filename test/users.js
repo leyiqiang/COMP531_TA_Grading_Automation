@@ -35,7 +35,7 @@ describe('Users/Followers', () => {
         expect(following, "!!! GET /following returns invalid followers list: " + resBody).to.be.ok;
 
         return request
-          .get('following/' + testUser1)
+          .get('following/' + loginData.username)
           .set('Cookie', cookie)
           .then((res) => {
             const resBody = JSON.stringify(res.body);

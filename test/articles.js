@@ -1,6 +1,7 @@
 import { request, registerData, loginData } from './test';
 import { expect } from 'chai';
 import { json } from 'mocha/lib/reporters';
+const ARTICLES = 'articles'
 
 
 let cookie = []

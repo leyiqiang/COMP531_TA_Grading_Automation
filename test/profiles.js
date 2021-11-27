@@ -33,7 +33,7 @@ describe('Headlines and Profiles', () => {
         expect(res.status).to.eq(200)
         expect(res.body['headline'], '!!! PUT /headline does not update headline!: ' + resBody).to.eq(updatedHeadline);
         return request
-          .get('headline/' + testUser1)
+          .get('headline/' + loginData.username)
           .set('Cookie', cookie)
           .then((res2) => {
             const resBody = JSON.stringify(res2.body);
@@ -57,7 +57,7 @@ describe('Headlines and Profiles', () => {
 
   it('GET /headline/:user? returns the headline messages for requested users(GET /headline/user) [3 pts] ', function () {
     return request
-      .get('headline/' + testUser1)
+      .get('headline/' + loginData.username)
       .set('Cookie', cookie)
       .then((res) => {
         const resBody = JSON.stringify(res.body);
@@ -112,7 +112,7 @@ describe('Headlines and Profiles', () => {
         expect(email, '!!! GET /email returns invalid email: ' + resBody).to.be.ok
 
         return request
-          .get('email/' + testUser1)
+          .get('email/' + loginData.username)
           .set('Cookie', cookie)
           .then((res) => {
             const resBody = JSON.stringify(res.body);
@@ -155,7 +155,7 @@ describe('Headlines and Profiles', () => {
         expect(res.body['zipcode'].toString(), '!!! GET /zipcode returns invalid zipcode: ' + resBody).to.be.ok
 
         return request
-          .get('zipcode/' + testUser1)
+          .get('zipcode/' + loginData.username)
           .set('Cookie', cookie)
           .then((res) => {
             const resBody = JSON.stringify(res.body);
@@ -196,7 +196,7 @@ describe('Headlines and Profiles', () => {
         expect(res.body['avatar'], '!!! GET /avatar returns invalid avatar: ' + resBody).to.be.ok
 
         return request
-          .get('avatar/' + testUser1)
+          .get('avatar/' + loginData.username)
           .set('Cookie', cookie)
           .then((res) => {
             const resBody = JSON.stringify(res.body);
