@@ -236,7 +236,7 @@ describe('Headlines and Profiles', () => {
         expect(res.body['username'], '!!! GET /dob returns invalid username: ' + resBody).to.be.ok
         expect(res.body['dob'], '!!! GET /dob returns invalid dob: ' + resBody).to.be.ok
         return request
-          .get('dob/' + testUser1)
+          .get('dob/' + registerData.username)
           .set('Cookie', cookie)
           .then((res) => {
             console.log('### GET /dob/testUser1 res data: ' + JSON.stringify(res.body))

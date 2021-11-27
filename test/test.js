@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import { expect } from 'chai';
 
-export const APP_URL = "https://shielded-fjord-96252.herokuapp.com/";
+export const APP_URL = "...";
 // export const APP_URL = "localhost:3000/";
 export const request = supertest(APP_URL)
 
@@ -17,7 +17,7 @@ export const dob = '11/1/1990'
 export const email = 'usertestone@gmail.com'
 export const zipcode = '12345'
 export const avatar = "testurl"
-export const phone = '123-123-1234'
+export const phone = '1231231234'
 
 export const registerData = {
   'username': testUser1,
@@ -28,7 +28,8 @@ export const registerData = {
   'phone': phone,
   'avatar': avatar,
   'dateOfBirth': dob,
-  'zipcode': zipcode
+  'zipcode': zipcode,
+  'following': [],
 }
 
 export const loginData = {
