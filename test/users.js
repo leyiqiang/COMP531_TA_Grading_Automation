@@ -1,27 +1,7 @@
-import { request } from './test';
+import { request, registerData, loginData } from './test';
 import { expect } from 'chai';
 import { json } from 'mocha/lib/reporters';
 
-
-const testUser1 = 'userTestOne' + new Date().getTime() // in case of repeat username
-const testUser2 = 'userTestTwo' + new Date().getTime()
-const password = 'AxoGyO9wjzESAFnL!' // in case someone have strong password verification
-const dob = '11/1/1990'
-const email = 'usertestone@gmail.com'
-const zipcode = '12345'
-
-const registerData = {
-  'username': testUser1,
-  'password': password,
-  'email': email,
-  'dob': dob,
-  'zipcode': zipcode
-}
-
-const loginData = {
-  'username': testUser1,
-  'password': password,
-}
 
 let cookie = []
 

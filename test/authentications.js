@@ -1,27 +1,9 @@
 import supertest from 'supertest'
 import { expect } from 'chai';
 
-import { request } from './test';
+import { request, registerData, loginData } from './test';
 
-const testUser1 = 'userTestOne' + new Date().getTime() // in case of repeat username
-const testUser2 = 'userTestTwo' + new Date().getTime()
-const password = 'AxoGyO9wjzESAFnL!' // in case someone have strong password verification
-const dob = '11/1/1990'
-const email = 'usertestone@gmail.com'
-const zipcode = '12345'
 
-const registerData = {
-  'username': testUser1,
-  'password': password,
-  'email': email,
-  'dob': dob,
-  'zipcode': zipcode
-}
-
-export const loginData = {
-  'username': testUser1,
-  'password': password,
-}
 
 let cookie = []
 describe('Authentication', () => {
@@ -33,7 +15,7 @@ describe('Authentication', () => {
       .then((res) => {
         const resBody = JSON.stringify(res.body);
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1, '!!! /POST register does not return correct username: user in response data (' + resBody + ')')
+        expect(res.body.username).to.eq(registerData.username, '!!! /POST register does not return correct username: user in response data (' + resBody + ')')
         expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST register does not return correct result: \'success\' in response data (' + resBody + ')')
       })
   });
@@ -45,7 +27,7 @@ describe('Authentication', () => {
       .then((res) => {
         const resBody = JSON.stringify(res.body);
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1, '!!! /POST login does not return correct username: user in response data(' + resBody + ')')
+        expect(res.body.username).to.eq(registerData.username, '!!! /POST login does not return correct username: user in response data(' + resBody + ')')
         expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data (' + resBody + ')')
       })
   });
@@ -56,9 +38,10 @@ describe('Authentication', () => {
       .post('login')
       .send(loginData)
       .then((res) => {
+        console.log(loginData)
         const resBody = JSON.stringify(res.body);
         expect(res.status).to.eq(200)
-        expect(res.body.username).to.eq(testUser1, '!!! /POST login does not return correct username: user in response data (' + resBody + ')')
+        expect(res.body.username).to.eq(loginData.username, '!!! /POST login does not return correct username: user in response data (' + resBody + ')')
         expect(res.body.result.toLowerCase()).to.eq('success', '!!! /POST login does not return correct result: \'success\' in response data (' + resBody + ')')
       })
   });
@@ -80,6 +63,8 @@ describe('Authentication', () => {
       .set('Cookie', cookie)
       .send({ headline: 'I am new' })
       .then((res) => {
+        console.log(loginData)
+        console.log(cookie)
         expect(res.status, res.err).to.eq(200)
       })
 
