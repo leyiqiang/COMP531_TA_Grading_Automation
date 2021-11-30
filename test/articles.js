@@ -65,10 +65,11 @@ describe('Articles', () => {
 
     let articles = res.body[ARTICLES] || res.body
     let post0Article = post0.body[ARTICLES] || post0.body
+    let post1Article = post1.body[ARTICLES] || post1.body
     expect(res.status).to.eq(200)
     expect(articles, '!!! res.body.articles is undefined: ' + resBody).to.not.be.undefined
     expect(articles).to.have.length.greaterThanOrEqual(2)
-    expect(post0Article).to.have.lengthOf(1)
+    expect(post1Article.length - post0Article.length).to.eq(1)
 
     return
   })
